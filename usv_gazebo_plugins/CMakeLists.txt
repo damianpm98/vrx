@@ -9,6 +9,7 @@ endif()
 
 find_package(catkin REQUIRED COMPONENTS gazebo_dev roscpp message_generation xacro wave_gazebo_plugins usv_msgs)
 find_package(Eigen3 REQUIRED)
+find_package(gazebo REQUIRED)
 
 ###################################
 ## catkin specific configuration ##
@@ -25,9 +26,11 @@ set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 include_directories( include
   ${catkin_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
+  ${GAZEBO_INCLUDE_DIRS}
 )
 link_directories(
   ${catkin_LIBRARY_DIRS}
+  ${GAZEBO_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -38,19 +41,19 @@ target_link_libraries(usv_gazebo_wind_plugin
   ${catkin_LIBRARIES}
   ${Eigen_LIBRARIES}
 )
-install(TARGETS usv_gazebo_wind_plugin
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
-)
+# install(TARGETS usv_gazebo_wind_plugin
+#   ARCHIVE DESTINATION lib
+#   LIBRARY DESTINATION lib
+#   RUNTIME DESTINATION bin
+# )
 
-set(XACRO_INORDER)
-if(DEFINED ENV{ROS_DISTRO})
-  if($ENV{ROS_DISTRO} STREQUAL "kinetic")
-    set(XACRO_INORDER INORDER)
-  endif()
-endif()
+# set(XACRO_INORDER)
+# if(DEFINED ENV{ROS_DISTRO})
+#   if($ENV{ROS_DISTRO} STREQUAL "kinetic")
+#     set(XACRO_INORDER INORDER)
+#   endif()
+# endif()
 
-# Generate demo world files from xacro and install
-install(DIRECTORY include/${PROJECT_NAME}/
-        DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
+# # Generate demo world files from xacro and install
+# install(DIRECTORY include/${PROJECT_NAME}/
+#         DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
